@@ -8,14 +8,34 @@ import Rating from 'react-rating';
 import StarOn from 'images/star-on.png';
 import StarOff from 'images/star-off.png';
 
-document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(
+const Review = ({ review }) => (
+  <div>
     <Rating
-      initialRating={1}
+      readonly
+      initialRating={review.rating}
       emptySymbol={<img src={StarOff} className="icon" />}
       placeholderSymbol={<img src={StarOff} className="icon" />}
       fullSymbol={<img src={StarOn} className="icon" />}
-    />,
-    document.getElementById('reviews-root')
+    />
+    <p>{review.comment}</p>
+  </div>
+);
+
+const Reviews = ({ reviews }) => {
+  return (
+    <div className="reviews">
+      {reviews.map(review => (
+        <Review review={review} key={review.id} />
+      ))}
+    </div>
   );
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  const node = document.getElementById('reviews_root');
+  console.log('node', node);
+  const reviews = JSON.parse(node.dataset.reviews);
+  console.log('data', reviews);
+
+  return ReactDOM.render(<Reviews reviews={reviews} />, node);
 });
