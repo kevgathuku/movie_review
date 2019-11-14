@@ -1,5 +1,6 @@
 class MoviesController < ApplicationController
   before_action :set_movie, only: [:show, :edit, :update, :destroy]
+  before_action :set_reviews, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index, :show]
 
   # GET /movies
@@ -11,7 +12,6 @@ class MoviesController < ApplicationController
   # GET /movies/1
   # GET /movies/1.json
   def show
-    @reviews = Review.where(movie_id: @movie.id).order(created_at: :desc)
   end
 
   # GET /movies/new
@@ -68,6 +68,10 @@ class MoviesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_movie
     @movie = Movie.find(params[:id])
+  end
+
+  def set_reviews
+    @reviews = Review.where(movie_id: @movie.id).order(created_at: :desc)
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
