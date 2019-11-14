@@ -1,5 +1,6 @@
 class ReviewsController < ApplicationController
   before_action :set_review, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:index, :show]
 
   # GET /reviews
   # GET /reviews.json
@@ -25,10 +26,11 @@ class ReviewsController < ApplicationController
   # POST /reviews.json
   def create
     @review = Review.new(review_params)
+    @review.user_id = current_user.id
 
     respond_to do |format|
       if @review.save
-        format.html { redirect_to @review, notice: 'Review was successfully created.' }
+        format.html { redirect_to @review, notice: "Review was successfully created." }
         format.json { render :show, status: :created, location: @review }
       else
         format.html { render :new }
@@ -42,7 +44,7 @@ class ReviewsController < ApplicationController
   def update
     respond_to do |format|
       if @review.update(review_params)
-        format.html { redirect_to @review, notice: 'Review was successfully updated.' }
+        format.html { redirect_to @review, notice: "Review was successfully updated." }
         format.json { render :show, status: :ok, location: @review }
       else
         format.html { render :edit }
@@ -56,19 +58,20 @@ class ReviewsController < ApplicationController
   def destroy
     @review.destroy
     respond_to do |format|
-      format.html { redirect_to reviews_url, notice: 'Review was successfully destroyed.' }
+      format.html { redirect_to reviews_url, notice: "Review was successfully destroyed." }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_review
-      @review = Review.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def review_params
-      params.require(:review).permit(:rating, :comment)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_review
+    @review = Review.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def review_params
+    params.require(:review).permit(:rating, :comment)
+  end
 end
