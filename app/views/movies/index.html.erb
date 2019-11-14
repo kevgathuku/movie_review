@@ -5,6 +5,7 @@
 <table>
   <thead>
     <tr>
+      <th>User</th>
       <th>Title</th>
       <th>Description</th>
       <th>Runtime</th>
@@ -17,6 +18,7 @@
   <tbody>
     <% @movies.each do |movie| %>
       <tr>
+        <td><%= movie.user_id %></td>
         <td><%= movie.title %></td>
         <td><%= movie.description %></td>
         <td><%= movie.runtime %></td>
@@ -31,5 +33,7 @@
 </table>
 
 <br>
+
+<p> Logged in as: <%= current_user.email %></p>
 
 <%= link_to 'New Movie', new_movie_path %>
