@@ -1,45 +1,21 @@
-<p id="notice"><%= notice %></p>
+<% if !user_signed_in? %>
+  <div class="jumbotron">
+    <h1>Your Favorite Movies Reviewed</h1>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt officia nam assumenda optio enim suscipit, quaerat, minima, cum itaque odit nostrum praesentium ratione molestias accusantium voluptas architecto non repellendus doloremque?
+    </p>
+    <p><%= link_to "Sign Up To Write A Review", new_user_registration_path, class: "btn btn-primary btn-lg" %></p>
+  </div>
+<% end %>
 
-<h1>Movies</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>User</th>
-      <th>Poster</th>
-      <th>Title</th>
-      <th>Description</th>
-      <th>Runtime</th>
-      <th>Director</th>
-      <th>Rating</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @movies.each do |movie| %>
-      <tr>
-        <td><%= movie.user_id %></td>
-        <td>
-        <% if movie.poster.attached? %>
-          <%= image_tag url_for(movie.poster), width: 400, height: 600 %>
-        <% end %>
-        </td>
-        <td><%= movie.title %></td>
-        <td><%= movie.description %></td>
-        <td><%= movie.runtime %></td>
-        <td><%= movie.director %></td>
-        <td><%= movie.rating %></td>
-        <td><%= link_to 'Show', movie %></td>
-        <td><%= link_to 'Edit', edit_movie_path(movie) %></td>
-        <td><%= link_to 'Destroy', movie, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<p> Logged in as: <%= current_user.email %></p>
-
-<%= link_to 'New Movie', new_movie_path %>
+<div class="row">
+  <% @movies.each do |movie| %>
+  <div class="col-sm-6 col-md-3">
+    <div class="thumbnail">
+      <% if movie.poster.attached? %>
+        <%= link_to (image_tag url_for(movie.poster), width: 400, height: 600, class: 'image'), movie %>
+      <% end %>
+    </div>
+  </div>
+  <% end %>
+</div>
