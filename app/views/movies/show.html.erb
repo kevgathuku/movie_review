@@ -1,5 +1,11 @@
 <p id="notice"><%= notice %></p>
 
+<% if @movie.poster.attached? %>
+  <p>
+    <%= image_tag url_for(@movie.poster), width: 400, height: 600  %>
+  </p>
+<% end %>
+
 <p>
   <strong>Title:</strong>
   <%= @movie.title %>
