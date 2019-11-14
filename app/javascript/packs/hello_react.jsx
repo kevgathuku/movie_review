@@ -21,21 +21,22 @@ const Review = ({ review }) => (
   </div>
 );
 
-const Reviews = ({ reviews }) => {
-  return (
-    <div className="reviews">
-      {reviews.map(review => (
-        <Review review={review} key={review.id} />
-      ))}
-    </div>
-  );
-};
+const Reviews = ({ reviews }) => (
+  <div className="reviews">
+    {reviews.map(review => (
+      <Review review={review} key={review.id} />
+    ))}
+  </div>
+);
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('turbolinks:load', () => {
+  console.log('Turbolinks Load');
   const node = document.getElementById('reviews_root');
-  console.log('node', node);
-  const reviews = JSON.parse(node.dataset.reviews);
-  console.log('data', reviews);
 
-  return ReactDOM.render(<Reviews reviews={reviews} />, node);
+  if (node) {
+    console.log('node available');
+    const reviews = JSON.parse(node.dataset.reviews);
+    console.log('Done! reviews.length', reviews.length);
+    ReactDOM.render(<Reviews reviews={reviews} />, node);
+  }
 });
