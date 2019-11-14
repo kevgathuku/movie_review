@@ -39,6 +39,7 @@
           <h3>No reviews just yet, would you like to add the first!</h3>
           <%= link_to "Write Review", new_movie_review_path(@movie), class: "btn btn-primary" %>
         <% else %>
+          <div id="reviews-root"></div>
           <% @reviews.each do |review| %>
             <div class="reviews">
               <p><%= review.rating %></p>
