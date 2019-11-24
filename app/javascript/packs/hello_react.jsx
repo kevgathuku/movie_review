@@ -25,14 +25,17 @@ function ReviewInput() {
   const [rating, setRating] = useState(0);
 
   return (
-    <Rating
-      emptySymbol={<img src={StarOff} className="icon" />}
-      fullSymbol={<img src={StarOn} className="icon" />}
-      onClick={value => {
-        setRating(value);
-      }}
-      initialRating={rating}
-    />
+    <div>
+      <Rating
+        emptySymbol={<img src={StarOff} className="icon" />}
+        fullSymbol={<img src={StarOn} className="icon" />}
+        onClick={value => {
+          setRating(value);
+        }}
+        initialRating={rating}
+      />
+      <input type="hidden" id="rating-value" name="review[rating]" value={rating}/>
+    </div>
   );
 }
 
